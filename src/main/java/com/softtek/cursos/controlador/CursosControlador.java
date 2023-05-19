@@ -1,2 +1,56 @@
-package com.softtek.cursos.controlador;public class CursosControlador {
+package com.softtek.cursos.controlador;
+
+import com.softtek.cursos.excepciones.ModeloExcepcionNoEncontrado;
+import com.softtek.cursos.modelo.Curso;
+import com.softtek.cursos.servicio.ICursoServicio;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/cursos")
+public class CursosControlador {
+    @Autowired
+    private ICursoServicio servicio;
+
+    @GetMapping
+    public ResponseEntity<List<Curso>> findAll() {
+        return new ResponseEntity<>(servicio.findAll(), HttpStatus.OK);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Curso> findOne(@PathVariable("id") int id) {
+        Curso cursoResultado = servicio.findOne(id);
+        if(cursoResultado == null){
+            throw new ModeloExcepcionNoEncontrado("Id no encontrado");
+        }
+        return new ResponseEntity<>(servicio.findOne(id), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Curso> create(@RequestBody Curso curso) {
+        return new ResponseEntity<>(servicio.create(curso), HttpStatus.CREATED);
+    }
+
+    @PutMapping
+    public ResponseEntity<Curso> update(@RequestBody Curso curso) {
+        Curso cursoResultado = servicio.findOne(curso.getIdCurso());
+        if(cursoResultado == null){
+            throw new ModeloExcepcionNoEncontrado("Id no encontrado" + curso.getIdCurso());
+        }
+        return new ResponseEntity<>(servicio.update(curso), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id")int id){
+        Curso cursoResultado = servicio.findOne(id);
+        if(cursoResultado == null){
+            throw new ModeloExcepcionNoEncontrado("Id no encontrado");
+        }
+        servicio.delete(id);
+    }
 }
+
+

@@ -1,8 +1,10 @@
 package com.softtek.cursos.excepciones;
 
-public class ExcepcionModeloNoEncontrado extends RuntimeException{
+public class ModeloExcepcionNoEncontrado extends RuntimeException{
 
-    public ExcepcionModeloNoEncontrado(String message) {
+    private static final long serialVersionUID = 1L;
+
+    public ModeloExcepcionNoEncontrado(String message) {
         super(message);
     }
 }

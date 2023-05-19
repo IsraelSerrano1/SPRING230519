@@ -1,13 +1,18 @@
 package com.softtek.cursos;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CursosApplication {
+public class CursosApplication implements CommandLineRunner {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CursosApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CursosApplication.class, args);
+    }
 
+    @Override
+    public void run(String... args) throws Exception {
+        System.out.println("SPRING Boot Application Running");
+    }
 }
